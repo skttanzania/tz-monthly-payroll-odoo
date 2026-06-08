@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Regular Employee Salary Structure -->
+        <record id="structure_regular" model="hr.payroll.structure">
+            <field name="name">Regular Employee Structure</field>
+            <field name="code">REG</field>
+            <field name="rule_ids" eval="[
+                (4, ref('hr_payroll.rule_basic')),
+                (4, ref('hr_payroll.rule_hra')),
+                (4, ref('hr_payroll.rule_transport')),
+                (4, ref('hr_payroll.rule_overtime')),
+                (4, ref('hr_payroll.rule_gross')),
+                (4, ref('hr_payroll.rule_pf')),
+                (4, ref('hr_payroll.rule_pt')),
+                (4, ref('hr_payroll.rule_tax')),
+                (4, ref('hr_payroll.rule_net')),
+            ]"/>
+            <field name="note">Standard salary structure for regular employees</field>
+        </record>
+
+        <!-- Manager Salary Structure -->
+        <record id="structure_manager" model="hr.payroll.structure">
+            <field name="name">Manager Structure</field>
+            <field name="code">MGR</field>
+            <field name="rule_ids" eval="[
+                (4, ref('hr_payroll.rule_basic')),
+                (4, ref('hr_payroll.rule_hra')),
+                (4, ref('hr_payroll.rule_transport')),
+                (4, ref('hr_payroll.rule_gross')),
+                (4, ref('hr_payroll.rule_pf')),
+                (4, ref('hr_payroll.rule_pt')),
+                (4, ref('hr_payroll.rule_tax')),
+                (4, ref('hr_payroll.rule_net')),
+            ]"/>
+            <field name="note">Salary structure for management positions</field>
+        </record>
+
+        <!-- Form View for Salary Rules and Tree/View records are provided in views file -->
+    </data>
+</odoo>

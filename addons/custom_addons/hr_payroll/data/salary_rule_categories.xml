@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="category_basic" model="hr.salary.rule.category">
+        <field name="name">Basic</field>
+        <field name="code">BASIC</field>
+    </record>
+    <record id="category_allowance" model="hr.salary.rule.category">
+        <field name="name">Allowance</field>
+        <field name="code">ALW</field>
+    </record>
+    <record id="category_deduction" model="hr.salary.rule.category">
+        <field name="name">Deduction</field>
+        <field name="code">DED</field>
+    </record>
+    <record id="category_total" model="hr.salary.rule.category">
+        <field name="name">Total</field>
+        <field name="code">TOTAL</field>
+    </record>
+</odoo>

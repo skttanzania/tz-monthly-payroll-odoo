@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Work Entry Type: Regular Work -->
+        <record id="work_entry_type_regular" model="hr.work.entry.type">
+            <field name="name">Regular Working Hours</field>
+            <field name="code">WORK100</field>
+            <field name="color">1</field>
+            <field name="sequence">10</field>
+        </record>
+        <!-- Work Entry Type: Overtime -->
+        <record id="work_entry_type_overtime" model="hr.work.entry.type">
+            <field name="name">Overtime</field>
+            <field name="code">OT150</field>
+            <field name="color">3</field>
+            <field name="sequence">20</field>
+        </record>
+        <!-- Work Entry Type: Weekend Work -->
+        <record id="work_entry_type_weekend" model="hr.work.entry.type">
+            <field name="name">Weekend Work</field>
+            <field name="code">WEEKEND200</field>
+            <field name="color">4</field>
+            <field name="sequence">30</field>
+        </record>
+        <!-- Work Entry Type: Holiday Work -->
+        <record id="work_entry_type_holiday" model="hr.work.entry.type">
+            <field name="name">Holiday Work</field>
+            <field name="code">HOLIDAY300</field>
+            <field name="color">6</field>
+            <field name="sequence">40</field>
+        </record>
+        <!-- Work Entry Type: Sick Leave -->
+        <record id="work_entry_type_sick" model="hr.work.entry.type">
+            <field name="name">Sick Leave</field>
+            <field name="code">SICK</field>
+            <field name="color">7</field>
+            <field name="sequence">50</field>
+        </record>
+        <!-- Work Entry Type: Annual Leave -->
+        <record id="work_entry_type_leave" model="hr.work.entry.type">
+            <field name="name">Annual Leave</field>
+            <field name="code">LEAVE</field>
+            <field name="color">8</field>
+            <field name="sequence">60</field>
+        </record>
+        <!-- Work Entry Type: Unpaid Leave -->
+        <record id="work_entry_type_unpaid" model="hr.work.entry.type">
+            <field name="name">Unpaid Leave</field>
+            <field name="code">UNPAID</field>
+            <field name="color">9</field>
+            <field name="sequence">70</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Salary Rule Categories -->
+        <record id="category_basic" model="hr.salary.rule.category">
+            <field name="name">Basic</field>
+            <field name="code">BASIC</field>
+        </record>
+
+        <record id="category_allowance" model="hr.salary.rule.category">
+            <field name="name">Allowance</field>
+            <field name="code">ALW</field>
+        </record>
+
+        <record id="category_deduction" model="hr.salary.rule.category">
+            <field name="name">Deduction</field>
+            <field name="code">DED</field>
+        </record>
+
+        <record id="category_gross" model="hr.salary.rule.category">
+            <field name="name">Gross</field>
+            <field name="code">GROSS</field>
+        </record>
+
+        <record id="category_net" model="hr.salary.rule.category">
+            <field name="name">Net</field>
+            <field name="code">NET</field>
+        </record>
+
+        <!-- Basic Salary Rule -->
+        <record id="rule_basic" model="hr.salary.rule">
+            <field name="name">Basic Salary</field>
+            <field name="code">BASIC</field>
+            <field name="sequence">1</field>
+            <field name="category_id" ref="hr_payroll.category_basic"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.wage</field>
+            <field name="appears_on_payslip">True</field>
+        </record>
+
+        <!-- House Rent Allowance -->
+        <record id="rule_hra" model="hr.salary.rule">
+            <field name="name">House Rent Allowance</field>
+            <field name="code">HRA</field>
+            <field name="sequence">10</field>
+            <field name="category_id" ref="hr_payroll.category_allowance"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.hra</field>
+            <field name="appears_on_payslip">True</field>
+        </record>
+
+        <!-- Transport Allowance -->
+        <record id="rule_transport" model="hr.salary.rule">
+            <field name="name">Transport Allowance</field>
+            <field name="code">TRANS</field>
+            <field name="sequence">11</field>
+            <field name="category_id" ref="hr_payroll.category_allowance"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = contract.transport_allowance</field>
+            <field name="appears_on_payslip">True</field>
+        </record>
+
+        <!-- Overtime Pay -->
+        <record id="rule_overtime" model="hr.salary.rule">
+            <field name="name">Overtime Pay</field>
+            <field name="code">OT</field>
+            <field name="sequence">20</field>
+            <field name="category_id" ref="hr_payroll.category_allowance"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = overtime_hours &gt; 0</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute"># Payment-frequency-aware overtime calculation
+# Determines hourly rate based on contract payment schedule
+if contract.schedule_pay == 'weekly':
+    hourly_rate = contract.wage / 40  # 40 hours per week
+elif contract.schedule_pay == 'bi-weekly':
+    hourly_rate = contract.wage / 80  # 80 hours per bi-week
+else:  # monthly (default)
+    hourly_rate = contract.wage / 160  # 160 hours per month
+result = overtime_hours * hourly_rate * 1.5  # 1.5x for overtime</field>
+            <field name="appears_on_payslip">True</field>
+        </record>
+
+        <!-- Gross Salary -->
+        <record id="rule_gross" model="hr.salary.rule">
+            <field name="name">Gross Salary</field>
+            <field name="code">GROSS</field>
+            <field name="sequence">100</field>
+            <field name="category_id" ref="hr_payroll.category_gross"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = BASIC + HRA + TRANS + OT</field>
+            <field name="appears_on_payslip">True</field>
+        </record>
+
+        <!-- Provident Fund Deduction -->
+        <record id="rule_pf" model="hr.salary.rule">
+            <field name="name">Provident Fund</field>
+            <field name="code">PF</field>
+            <field name="sequence">200</field>
+            <field name="category_id" ref="hr_payroll.category_deduction"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = -contract.provident_fund</field>
+            <field name="appears_on_payslip">True</field>
+        </record>
+
+        <!-- Professional Tax -->
+        <record id="rule_pt" model="hr.salary.rule">
+            <field name="name">Professional Tax</field>
+            <field name="code">PT</field>
+            <field name="sequence">201</field>
+            <field name="category_id" ref="hr_payroll.category_deduction"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = -contract.professional_tax</field>
+            <field name="appears_on_payslip">True</field>
+        </record>
+
+        <!-- Income Tax -->
+        <record id="rule_tax" model="hr.salary.rule">
+            <field name="name">Income Tax</field>
+            <field name="code">TAX</field>
+            <field name="sequence">202</field>
+            <field name="category_id" ref="hr_payroll.category_deduction"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = -contract.income_tax</field>
+            <field name="appears_on_payslip">True</field>
+        </record>
+
+        <!-- Net Salary -->
+        <record id="rule_net" model="hr.salary.rule">
+            <field name="name">Net Salary</field>
+            <field name="code">NET</field>
+            <field name="sequence">300</field>
+            <field name="category_id" ref="hr_payroll.category_net"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = GROSS + PF + PT + TAX</field>
+            <field name="appears_on_payslip">True</field>
+        </record>
+    </data>
+</odoo>

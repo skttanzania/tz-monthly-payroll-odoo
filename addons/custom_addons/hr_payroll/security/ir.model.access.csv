@@ -1,0 +1,14 @@
+
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_salary_rule_user,hr.salary.rule user,model_hr_salary_rule,hr.group_hr_user,1,0,0,0
+access_hr_salary_rule_manager,hr.salary.rule manager,model_hr_salary_rule,hr.group_hr_manager,1,1,1,1
+access_hr_salary_rule_category_user,hr.salary.rule.category user,model_hr_salary_rule_category,hr.group_hr_user,1,0,0,0
+access_hr_salary_rule_category_manager,hr.salary.rule.category manager,model_hr_salary_rule_category,hr.group_hr_manager,1,1,1,1
+access_hr_payslip_user,hr.payslip user,model_hr_payslip,hr.group_hr_user,1,1,1,0
+access_hr_payslip_manager,hr.payslip manager,model_hr_payslip,hr.group_hr_manager,1,1,1,1
+access_hr_payslip_line_user,hr.payslip.line user,model_hr_payslip_line,hr.group_hr_user,1,1,1,0
+access_hr_payslip_line_manager,hr.payslip.line manager,model_hr_payslip_line,hr.group_hr_manager,1,1,1,1
+access_hr_payroll_structure_user,hr.payroll.structure user,model_hr_payroll_structure,hr.group_hr_user,1,0,0,0
+access_hr_payroll_structure_manager,hr.payroll.structure manager,model_hr_payroll_structure,hr.group_hr_manager,1,1,1,1
+access_hr_attendance_payroll_user,hr.attendance.payroll user,model_hr_attendance_payroll,hr.group_hr_user,1,0,0,0
+access_hr_attendance_payroll_manager,hr.attendance.payroll manager,model_hr_attendance_payroll,hr.group_hr_manager,1,1,1,1

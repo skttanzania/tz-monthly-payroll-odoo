@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_payslip_tree" model="ir.ui.view">
+        <field name="name">hr.payslip.tree</field>
+        <field name="model">hr.payslip</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="employee_id"/>
+                <field name="contract_id"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_payslip_form" model="ir.ui.view">
+        <field name="name">hr.payslip.form</field>
+        <field name="model">hr.payslip</field>
+        <field name="arch" type="xml">
+            <form string="Payslip">
+                <sheet>
+                    <group>
+                        <field name="employee_id"/>
+                        <field name="contract_id"/>
+                        <field name="struct_id"/>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                    <notebook>
+                        <page string="Lines">
+                            <field name="line_ids">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button name="compute_sheet" type="object" string="Compute Sheet" class="btn-primary"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for payslips -->
+    <record id="action_hr_payslip" model="ir.actions.act_window">
+        <field name="name">Payslips</field>
+        <field name="res_model">hr.payslip</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_hr_payslip" name="Payslips" parent="menu_hr_payroll_root" action="action_hr_payslip"/>
+
+    <!-- Inherit contract form to add fields -->
+    <record id="view_hr_contract_form_inherit_payroll" model="ir.ui.view">
+        <field name="name">hr.contract.form.payroll.inherit</field>
+        <field name="model">hr.contract</field>
+        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[field[@name='wage']]" position="after">
+                <group>
+                    <field name="schedule_pay"/>
+                    <field name="weekly_wage"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
