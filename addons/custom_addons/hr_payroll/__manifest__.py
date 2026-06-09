@@ -1,6 +1,6 @@
 {
     'name': 'HR Payroll (Custom)',
-    'version': '16.0.1.0.0',
+    'version': '19.0.1.0.0',
     'summary': 'Payroll module with weekly schedule and overtime (TZS)',
     'description': 'Payroll module implementing weekly pay, overtime, salary rules and structures',
     'category': 'Human Resources',

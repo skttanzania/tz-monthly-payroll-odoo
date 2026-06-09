@@ -9,15 +9,15 @@
                 <form string="Payslip">
                     <header>
                         <button name="compute_sheet" string="Compute Sheet" type="object"
-                                states="draft" class="oe_highlight"/>
+                                states="draft" class="btn btn-primary"/>
                         <button name="action_payslip_done" string="Confirm" type="object"
-                                states="verify" class="oe_highlight"/>
+                                states="verify" class="btn btn-primary"/>
                         <button name="action_payslip_draft" string="Set to Draft" type="object"
-                                states="cancel"/>
+                                states="cancel" class="btn btn-secondary"/>
                         <button name="action_payslip_cancel" string="Reject" type="object"
-                                states="draft,verify"/>
+                                states="draft,verify" class="btn btn-secondary"/>
                         <field name="state" widget="statusbar"
-                               statusbar_visible="draft,verify,done"/>
+                               statusbar_visible="draft,verify,done,cancel"/>
                     </header>
                     <sheet>
                         <div class="oe_title">
@@ -59,9 +59,9 @@
                             </page>
                             <page string="Attendance" name="attendance">
                                 <group>
-                                    <field name="attendance_id"/>
-                                    <field name="worked_hours"/>
-                                    <field name="overtime_hours"/>
+                                    <field name="employee_id" readonly="1"/>
+                                    <field name="date_from" readonly="1"/>
+                                    <field name="date_to" readonly="1"/>
                                 </group>
                             </page>
                             <page string="Other Info" name="other_info">

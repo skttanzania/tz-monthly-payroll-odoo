@@ -37,6 +37,8 @@ class HrContract(models.Model):
                                     string='Total Deductions', store=True)
     net_salary = fields.Float(compute='_compute_net_salary',
                               string='Net Salary', store=True)
+    weekly_wage = fields.Float(compute='_compute_weekly_wage',
+                               string='Weekly Wage', store=True)
 
     @api.depends('hra', 'transport_allowance', 'meal_allowance',
                  'medical_allowance', 'other_allowance')
@@ -70,3 +72,12 @@ class HrContract(models.Model):
                 contract.total_allowances -
                 contract.total_deductions
             )
+
+    @api.depends('wage', 'schedule_pay')
+    def _compute_weekly_wage(self):
+        for contract in self:
+            if contract.schedule_pay == 'weekly':
+                contract.weekly_wage = contract.wage
+            else:
+                # For monthly: assume 4.33 weeks per month (52 weeks / 12 months)
+                contract.weekly_wage = contract.wage / 4.33 if contract.schedule_pay == 'monthly' else contract.wage

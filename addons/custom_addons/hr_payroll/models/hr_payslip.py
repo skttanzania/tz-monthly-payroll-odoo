@@ -8,26 +8,22 @@ class HrPayslip(models.Model):
     _description = 'Employee Payslip'
     _order = 'date_from desc, id desc'
 
-    name = fields.Char(required=True, readonly=True, states={'draft': [('readonly', False)]})
+    name = fields.Char(required=True, readonly=True)
     number = fields.Char(string='Reference', readonly=True, copy=False)
-    employee_id = fields.Many2one('hr.employee', string='Employee', required=True,
-                                  readonly=True, states={'draft': [('readonly', False)]})
-    date_from = fields.Date(required=True, readonly=True, states={'draft': [('readonly', False)]})
-    date_to = fields.Date(required=True, readonly=True, states={'draft': [('readonly', False)]})
+    employee_id = fields.Many2one('hr.employee', string='Employee', required=True, readonly=True)
+    date_from = fields.Date(required=True, readonly=True)
+    date_to = fields.Date(required=True, readonly=True)
     state = fields.Selection([
         ('draft', 'Draft'),
         ('verify', 'Waiting'),
         ('done', 'Done'),
         ('cancel', 'Rejected'),
     ], string='Status', default='draft', readonly=True, copy=False)
-    line_ids = fields.One2many('hr.payslip.line', 'slip_id', string='Payslip Lines',
-                               readonly=True, states={'draft': [('readonly', False)]})
+    line_ids = fields.One2many('hr.payslip.line', 'slip_id', string='Payslip Lines', readonly=True)
     company_id = fields.Many2one('res.company', string='Company',
                                  default=lambda self: self.env.company)
-    contract_id = fields.Many2one('hr.contract', string='Contract', readonly=True,
-                                  states={'draft': [('readonly', False)]})
-    struct_id = fields.Many2one('hr.salary.structure', string='Structure', required=True,
-                                readonly=True, states={'draft': [('readonly', False)]})
+    contract_id = fields.Many2one('hr.contract', string='Contract', readonly=True)
+    struct_id = fields.Many2one('hr.salary.structure', string='Structure', required=True, readonly=True)
     total_amount = fields.Float(compute='_compute_total_amount', store=True, string='Total')
     basic_wage = fields.Float(compute='_compute_basic_wage', store=True, string='Basic Wage')
     net_wage = fields.Float(compute='_compute_net_wage', store=True, string='Net Salary')
@@ -141,4 +137,7 @@ class HrPayslipLine(models.Model):
 
     @api.onchange('amount', 'quantity', 'rate')
     def _onchange_amount(self):
-        self.total = self.amount * self.quantity * self.rate / 100
+        if self.amount and self.quantity and self.rate:
+            self.total = self.amount * self.quantity * self.rate / 100
+        else:
+            self.total = 0.0
