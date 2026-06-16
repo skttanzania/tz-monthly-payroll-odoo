@@ -4,7 +4,7 @@ from odoo.exceptions import UserError
 
 
 class HrPayslip(models.Model):
-    _name = 'hr.payslip'
+    _inherit = 'hr.payslip'
     _description = 'Employee Payslip'
     _order = 'date_from desc, id desc'
 
@@ -119,7 +119,7 @@ class HrPayslip(models.Model):
 
 
 class HrPayslipLine(models.Model):
-    _name = 'hr.payslip.line'
+    _inherit = 'hr.payslip.line'
     _description = 'Payslip Line'
     _order = 'sequence, id'
 
